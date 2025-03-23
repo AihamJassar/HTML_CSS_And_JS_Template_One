@@ -17,22 +17,15 @@ let clicked = false;
 bars.addEventListener("click", (_) => {
   let links = document.getElementById("links");
   if (!clicked) {
-    links.style.cssText = `
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 70px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 15px;
-        padding: 10px 25px;
-        border-top: 5px solid black;
-        z-index: 10;`;
+    links.style.left = "0";
     clicked = true;
   } else {
-    links.style.display = "none";
+    links.style.left = "-1000px";
     clicked = false;
   }
 });
+
+let gear = document.querySelector(".gear");
+gear.addEventListener("click", _ => {
+  document.getElementsByClassName("settings-box")[0].classList.toggle("open")
+})
