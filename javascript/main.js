@@ -5,14 +5,17 @@ let landingBackground = [
   "../images/landing-3.jpg",
 ];
 let index = 1;
-window.setInterval((_) => {
+
+function changeBackground(){
+  return window.setInterval((_) => {
   if (index === landingBackground.length) {
     index = 0;
   }
   landing.style.backgroundImage = `url(${landingBackground[index]})`;
   index++;
-}, 3000);
-
+}, 100000);
+}
+changeBackground();
 let bars = document.getElementById("bars");
 let clicked = false;
 bars.addEventListener("click", (_) => {
@@ -38,12 +41,11 @@ colors.addEventListener("click", (event) => {
   let mainColor = event.target.dataset.color;
   if (mainColor) {
     document.documentElement.style.setProperty(`--main-color`, mainColor);
-    list.forEach((li) => li.classList.remove("main-color"));
+    document.querySelectorAll(".settings-box .box .colors li.main-color").forEach((li) => li.classList.remove("main-color"));
     event.target.classList.add("main-color");
     localStorage.setItem("main-color", mainColor);
   }
 });
-
 if (localStorage.getItem("main-color")) {
   document.documentElement.style.setProperty(
     `--main-color`,
@@ -57,3 +59,21 @@ if (localStorage.getItem("main-color")) {
     }
   });
 }
+//localStorage.clear()
+let chBa = localStorage.getItem("changedBackground");
+let changedBackground = document.getElementById("background");
+if (chBa === "no change") {
+  changedBackground.removeAttribute("checked");
+  clearInterval(changeBackground);
+}
+console.log("Checkbox : " + changedBackground.getAttribute("checked"))
+changedBackground.addEventListener("click", event => {
+  if(!event.target.getAttribute("checked")){
+    
+    clearInterval(chandeBackground());
+    localStorage.setItem("changedBackground", "no change");
+  } else {
+    localStorage.setItem("changedBackground", "change");
+    changeBackground();
+  }
+});
